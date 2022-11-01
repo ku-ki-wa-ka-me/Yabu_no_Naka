@@ -1,0 +1,45 @@
+var html = require('fs');
+
+const indexHtml =html.readFileSync('./index.html')
+const styleCss =html.readFileSync('./css/style.css')
+
+var http = require('http').createServer(
+    function (req, res) {
+        
+        switch (req.url) {
+            case '/':
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.write(indexHtml);
+                res.end();
+                break;
+
+            case '/css/style.css':
+                res.writeHead(200, {'Content-Type': 'text/css'});
+                res.write(styleCss);
+                res.end();
+                break;
+
+            default:
+                break;
+        }
+    });
+
+var io = require('socket.io')(http);
+var webPort = process.env.PORT || 3000;
+http.listen(webPort);
+
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+var html = require('fs').readFileSync('index.html');
+var http = require('http').createServer(
+    function (req, res) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(html);
+    });
+var io = require('socket.io')(http);
+
+
+
+var webPort = process.env.PORT || 3000;
+http.listen(webPort);

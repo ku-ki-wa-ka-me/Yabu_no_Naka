@@ -1,0 +1,725 @@
+/*枠の作成*/
+* {
+    outline: 1px solid #ff0000;
+    margin:0;
+    padding:0;
+} 
+/*クリックの禁止(Tab→Enterは効かない)*/
+/*
+* {
+pointer-events: none;
+}
+*/
+
+/*------------------------------------------------------ゲーム画面------------------------------------------*/
+
+#content {
+    background-color: #f6f7bd; /*全背景*/
+    width: 80vw;
+    height: 40vw;
+    margin: 0 auto;
+    text-align: center;
+    position:relative;
+    overflow: hidden;
+}
+
+/*------------------------------------------------------human1------------------------------------------*/
+
+.human1_box{
+    /*ポジション*/
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    transform-style: preserve-3d;
+
+    perspective:150rem;
+    -moz-perspective: 150rem;
+}
+.human1{
+    z-index: 100;
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #655643;
+    /*拡大*/
+    transform: scale(1.5);
+
+    backface-visibility: hidden;
+    transition:.8s;
+}
+.human1_back{
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #fff;
+    /*拡大*/
+    transform: rotateY(180deg) scale(1.5);
+    backface-visibility: hidden;
+    transition:.8s;
+}
+
+.human1::before,.human1_back::before{
+    display: block;
+    content: "";
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+
+    width: 80%;
+    height: 48%;
+
+    border-radius: 50%;
+}
+
+.human1::before {
+    background: #655643;
+}
+
+.human1_back::before {
+    background: #fff;
+}
+
+.human1_box:hover .human1{
+    transform: rotateY(180deg) scale(1.5);
+}
+
+.human1_box:hover .human1_back{
+    transform:rotateY(0) scale(1.5);
+}
+
+/*------------------------------------------------------human2------------------------------------------*/
+
+.human2 {
+    /*ポジション*/
+    position: absolute;
+    top: 30%;
+    left: 1%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #655643;
+    /*拡大*/
+    transform: scale(1.5);
+}
+
+.human2::before{
+    content: "";
+
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+
+    width: 80%;
+    height: 48%;
+
+    border-radius: 50%;
+
+    background: #655643;
+}
+
+/*------------------------------------------------------human3------------------------------------------*/
+
+.human3_box {
+    /*ポジション*/
+    position: absolute;
+    top: 30%;
+    right:  1%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    transform-style: preserve-3d;
+
+    perspective:150rem;
+    -moz-perspective: 150rem;
+}
+.human3 {
+    z-index: 100;
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #655643;
+    /*拡大*/
+    transform: scale(1.5);
+    
+    backface-visibility: hidden;
+    transition:.8s;
+}
+
+.human3_back{
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #fff;
+    /*拡大*/
+    transform: rotateY(180deg) scale(1.5);
+    backface-visibility: hidden;
+    transition:.8s;
+}
+
+.human3::before,.human3_back::before{
+    display: block;
+    content: "";
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+
+    width: 80%;
+    height: 48%;
+
+    border-radius: 50%;
+}
+
+.human3::before {
+    background: #655643;
+}
+
+.human3_back::before {
+    background: #fff;
+}
+
+.human3_box:hover .human3{
+    transform: rotateY(180deg) scale(1.5);
+}
+
+.human3_box:hover .human3_back{
+    transform:rotateY(0) scale(1.5);
+}
+
+/*------------------------------------------------------victimA------------------------------------------*/
+.victimA_box {
+    /*ポジション*/
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    /*回転用*/
+    transform-style: preserve-3d;
+    perspective:150rem;
+    -moz-perspective: 150rem;
+
+    box-shadow: none !important;
+}
+
+.victimA{
+    /*回転用*/
+    z-index: 100;
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #80bca3;
+    /*拡大*/
+    transform: scale(2);
+    /*回転用*/
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimA_back{
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #fff;
+    /*拡大*/
+    transform: rotateY(180deg) scale(2);
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimA::before,.victimA_back::before{
+    /*おまじない*/
+    display: block;
+    content: "";
+    /*位置*/
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+    /*大きさ*/
+    width: 80%;
+    height: 48%;
+    /*丸*/
+    border-radius: 50%;
+}
+
+.victimA::before {
+    background: #80bca3;
+}
+
+.victimA_back::before {
+    background: #fff;
+}
+
+.victimA_box.turn .victimA{
+    /*2つ選択されたときの回転*/
+    transform: rotateY(180deg) scale(2);
+}
+
+.victimA_box.turn .victimA_back{
+    /*2つ選択されたときの回転*/
+    transform:rotateY(0) scale(2);
+}
+
+.victimA.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+
+.victimA_back.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+/*------------------------------------------------------victimB------------------------------------------*/
+.victimB_box {
+    /*ポジション*/
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    /*回転用*/
+    transform-style: preserve-3d;
+    perspective:150rem;
+    -moz-perspective: 150rem;
+
+    box-shadow: none !important;
+}
+
+.victimB{
+    /*回転用*/
+    z-index: 100;
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #80bca3;
+    /*拡大*/
+    transform: scale(2);
+    /*回転用*/
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimB_back{
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #fff;
+    /*拡大*/
+    transform: rotateY(180deg) scale(2);
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimB::before,.victimB_back::before{
+    /*おまじない*/
+    display: block;
+    content: "";
+    /*位置*/
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+    /*大きさ*/
+    width: 80%;
+    height: 48%;
+    /*丸*/
+    border-radius: 50%;
+}
+
+.victimB::before {
+    background: #80bca3;
+}
+
+.victimB_back::before {
+    background: #fff;
+}
+
+.victimB_box.turn .victimB{
+    /*2つ選択されたときの回転*/
+    transform: rotateY(180deg) scale(2);
+}
+
+.victimB_box.turn .victimB_back{
+    /*2つ選択されたときの回転*/
+    transform:rotateY(0) scale(2);
+}
+
+.victimB.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+
+.victimB_back.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+/*------------------------------------------------------victimC------------------------------------------*/
+.victimC_box {
+    /*ポジション*/
+    position: absolute;
+    top: 40%;
+    left: 65%;
+    /*大きさ*/
+    width: 3%;
+    height: 10%;
+    transform-style: preserve-3d;
+
+    perspective:150rem;
+    -moz-perspective: 150rem;
+
+    box-shadow: none !important;
+}
+
+.victimC{
+    z-index: 100;
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #80bca3;
+    /*拡大*/
+    transform: scale(2);
+
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimC_back{
+    position: absolute;
+    /*大きさ*/
+    width: 100%;
+    height: 100%;
+    /*肩の傾き*/
+    border-top-left-radius: 20%;
+    border-top-right-radius:20%;
+    /*色*/
+    background: #fff;
+    /*拡大*/
+    transform: rotateY(180deg) scale(2);
+    backface-visibility: hidden;
+    transition:.8s;
+    transition-property: transform;
+}
+
+.victimC::before,.victimC_back::before{
+    display: block;
+    content: "";
+    position: absolute;
+    top:  -50%;
+    left:  8%;
+
+    width: 80%;
+    height: 48%;
+
+    border-radius: 50%;
+}
+
+.victimC::before {
+    background: #80bca3;
+}
+
+.victimC_back::before {
+    background: #fff;
+}
+
+.victimC_box.turn .victimC{
+    transform: rotateY(180deg) scale(2);
+}
+
+.victimC_box.turn .victimC_back{
+    transform:rotateY(0) scale(2);
+}
+
+.victimC.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+
+.victimC_back.isActive::before {
+    box-shadow:0 0 1vw #bf4d28;
+}
+/*-----------------------------------------------------ライフポイント-human1----------------------------------------------------------*/
+#human1_life .fa-heart {
+    font-size: 4vw;
+
+    position: absolute;
+    bottom: 0%;
+    left: 43%;
+
+    color: #bf4d28;
+}
+
+/*-----------------------------------------------------ライフポイント-human2----------------------------------------------------------*/
+
+#human2_life .fa-heart {
+    font-size: 4vw;
+
+    position: absolute;
+    bottom: 45%;
+    left: 0%;
+
+    color: #e6ac27;
+}
+
+/*-----------------------------------------------------ライフポイント-human3----------------------------------------------------------*/
+
+#human3_life .fa-heart {
+    font-size: 4vw;
+
+    position: absolute;
+    bottom: 45%;
+    right: 0%;
+
+    color: #80bca3;
+}
+
+/*-----------------------------------------------------ライフポイント-SVGマーク----------------------------------------------------------*/
+
+.fa-heart i {
+    font-size: 2.5vw;
+
+    position: absolute;
+    bottom: 20%;
+    left: 30%;
+
+    color: #f6f7bd;
+}
+
+/*-----------------------------------------------------victim選択時の点滅用付加クラス----------------------------------------------------------*/
+
+
+.v_choice{
+    animation: flash 1s linear infinite;
+}
+
+/*-----------------------------------------------------点滅アニメーション----------------------------------------------------------*/
+
+@keyframes flash {
+    0%,100% {
+        opacity: 1;
+    }
+    50% {opacity: 0
+    }
+}
+
+/*-----------------------------------------------------？？？？？？？？----------------------------------------------------------*/
+
+.light {
+    box-shadow:0 0 1vw #bf4d28;
+}
+
+/*------------------------------------------------------裏返しボタン---------------------------------------------------------*/
+
+.btn-flat-border {
+    position: absolute;
+    bottom: 27%;
+    left: 44%;
+
+    width:15%;
+    height: 8%;
+
+    font-size: 1vw;
+    display:table;
+    text-align:center;
+
+    font-weight: bold;
+
+    text-decoration: none;
+    color: #655643;
+    border: solid 0.2vw #bf4d28;
+    border-radius: 1vw;
+    background: #e6ac27;
+
+    pointer-events: none;
+    opacity: 0.3;
+    transition:.5s;
+    transition-property: opacity;
+
+    z-index: 10;
+}
+
+.btn-flat-border:hover {
+    background: #67c5ff;
+    color: white;
+}
+
+.btn-flat-border p {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+/*------------------------------------------------------犯人指定ボタン---------------------------------------------------------*/
+
+.btn-nomi {
+    position: absolute;
+    bottom: 27%;
+    left: 44%;
+
+    width:15%;
+    height: 8%;
+
+    font-size: 1vw;
+    display:table;
+    text-align:center;
+
+    font-weight: bold;
+
+    text-decoration: none;
+    color: #655643;
+    border: solid 0.2vw #bf4d28;
+    border-radius: 1vw;
+    background: #e6ac27;
+
+    pointer-events: none;
+    opacity: 0.3;
+    transition:.5s;
+    transition-property: opacity;
+
+    z-index: 10;
+    visibility: hidden;
+}
+
+.btn-nomi:hover {
+    background: #67c5ff;
+    color: white;
+}
+
+.btn-nomi p {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+/*------------------------------------------------------犯人指定マーク=human1---------------------------------------------------------*/
+
+#human1_eye {
+    position: absolute;
+    bottom: 1%;
+    left: 38%;
+
+    width: 4%;
+    height:8%;
+    border-radius: 50%;
+
+    color: #f6f7bd;
+    /*自色*/
+    background: #bf4d28;
+
+    display:table;
+    text-align:center;
+}
+
+#human1_eye .fa-eye {
+    font-size: 2vw;
+
+    display:table-cell;
+    vertical-align:middle;
+}
+/*------------------------------------------------------犯人指定マーク=human2---------------------------------------------------------*/
+
+#human2_eye {
+    position: absolute;
+    bottom: 36%;
+    left: 0.5%;
+
+    width: 4%;
+    height:8%;
+    border-radius: 50%;
+
+    color: #f6f7bd;
+    /*自色*/
+    background: #e6ac27;
+
+    display:table;
+    text-align:center;
+}
+
+#human2_eye .fa-eye {
+    font-size: 2vw;
+
+    display:table-cell;
+    vertical-align:middle;
+}
+/*------------------------------------------------------犯人指定マーク=human3---------------------------------------------------------*/
+
+#human3_eye {
+    position: absolute;
+    bottom: 36%;
+    right: 0.5%;
+
+    width: 4%;
+    height:8%;
+    border-radius: 50%;
+
+    color: #f6f7bd;
+    /*自色*/
+    background: #80bca3;
+
+    display:table;
+    text-align:center;
+}
+
+#human3_eye .fa-eye {
+    font-size: 2vw;
+
+    display:table-cell;
+    vertical-align:middle;
+}
+
+
+
+
+
+
+
+

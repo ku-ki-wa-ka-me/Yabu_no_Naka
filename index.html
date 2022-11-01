@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>chat</title>
+   <!------css------------------------------------------>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <!------js------------------------------------------>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="js/script.js"></script>
+    <!------socket用～いじらなくていい？------------------------------------------>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+
+
+<form><input></form><div></div>
+
+    <div id="content">
+        
+        <div class="test1">tes</div>
+        <div id="announce">待機中</div>
+
+        <!------------------------------------human---------------------------------->
+
+        <div class="human1_box">
+            <div class="human1"></div>
+            <div class="human1_back"></div>
+        </div>
+
+        <div class="human2"></div>
+        
+        <div class="human3_box">
+            <div class="human3"></div>
+            <div class="human3_back"></div>
+        </div>
+
+        <!------------------------------------victim---------------------------------->
+
+        <div id="victim_box">
+
+            <div id="VA" class="victimA_box">
+                <div class="victimA"></div>
+                <div class="victimA_back"></div>
+            </div>
+
+            <div id="VB" class="victimB_box">
+                <div class="victimB"></div>
+                <div class="victimB_back"></div>
+            </div>
+
+            <div id="VC" class="victimC_box">
+                <div class="victimC"></div>
+                <div class="victimC_back"></div>
+            </div>
+
+        </div>
+
+        <!------------------------------------human=ライフ---------------------------------->
+
+        <div id="human1_life">
+            <div class="fas fa-heart"><i></i></div>
+        </div>
+        <div id="human2_life">
+            <div class="fas fa-heart"><i></i></div>
+        </div>
+        <div id="human3_life">
+            <div class="fas fa-heart"><i></i></div>
+        </div>
+
+        <!------------------------------------human=目マーク---------------------------------->
+
+        <div id="human1_eye">
+            <div class="far fa-eye"><i></i></div>
+        </div>
+
+        <div id="human2_eye">
+            <div class="far fa-eye"><i></i></div>
+        </div>
+
+        <div id="human3_eye">
+            <div class="far fa-eye"><i></i></div>
+        </div>
+
+        <!------------------------------------裏返しボタン---------------------------------->
+        <a href="#" onClick="javascript:spin(); return false;" class="btn-flat-border"><p>裏返す</p></a>
+        <!------------------------------------犯人指定ボタン---------------------------------->
+        <a href="#" onClick="javascript:nominate(); return false;" class="btn-nomi"><p>犯人</p></a>
+        
+        <!--テスト中-->
+        <a href="/unti">To next page</a>
+        <!--テスト中-->
+
+    </div>
+
+<script>
+    ////部屋番号////
+    var heya = 0;
+    ///////////////////////////Tabキー無効化///////////////////////////
+        document.onkeydown = cancel_tab;
+
+    function cancel_tab(e) {
+        if(e == undefined){
+            if(event.keyCode==9){
+                event.returnValue=false;
+                return false;
+            }
+        } else {
+            if(e.which==9)
+                return false;
+        }
+    }
+    ///////////////////////////Tabキー無効化///////////////////////////
+    
+    
+    //////////////////////////////////////////////////接続用????/////////////////////////////////////////////////////
+    var socket = io();
+    //////////////////////////////////////////////////接続用????/////////////////////////////////////////////////////
+    //////////////////////////////////////////////////チャット用/////////////////////////////////////////////////////
+    $('form').submit(function () {
+        socket.emit('msg', $('input').val());
+        $('input').val('');
+        return false;
+    });
+    socket.on('msg', function (data) {
+        data = $('<div/>').text(data).html();
+        $('div').prepend(data + '<br>');
+    });
+    //////////////////////////////////////////////////チャット用/////////////////////////////////////////////////////
+    
+    //////////////////////////////////////////////////3人揃った→自分と右隣のカード配布/////////////////////////////////////////////////////
+    socket.on("start_card_0",(msg)=>{
+        heya = msg.heya_num;
+        var ana = document.querySelector('.test1');   ana.innerHTML = "あんたは1人目よ";
+        var my_card = document.querySelector('.human1_back');   my_card.innerHTML = msg.myCard;
+        var right_card = document.querySelector('.human3_back'); right_card.innerHTML = msg.rightCard;
+    });
+    socket.on("start_card_1",(msg)=>{
+        heya = msg.heya_num;
+        var ana = document.querySelector('.test1');   ana.innerHTML = "あんたは2人目よ";
+        var my_card = document.querySelector('.human1_back');   my_card.innerHTML = msg.myCard;
+        var right_card = document.querySelector('.human3_back'); right_card.innerHTML = msg.rightCard;
+    });
+    socket.on("start_card_2",(msg)=>{
+        heya = msg.heya_num;
+        var ana = document.querySelector('.test1');   ana.innerHTML = "あんたは3人目よ";
+        var my_card = document.querySelector('.human1_back');   my_card.innerHTML = msg.myCard;
+        var right_card = document.querySelector('.human3_back'); right_card.innerHTML = msg.rightCard;
+    });
+    //////////////////////////////////////////////////3人揃った→自分と右隣のカード配布/////////////////////////////////////////////////////
+    socket.on("victim_turn_num-2",(msg)=>{
+        var VA_choose = document.querySelector('.victimA_back'); VA_choose.innerHTML = msg.VA;
+        var VB_choose = document.querySelector('.victimB_back'); VB_choose.innerHTML = msg.VB;
+        var VC_choose = document.querySelector('.victimC_back'); VC_choose.innerHTML = msg.VC;
+    })
+    ///////////////////////////////////////////選択マークの反映////////////////////////////////////////////////////////////
+    socket.on("R",(msg)=>{
+               if( msg.VA_s == "yes" ){
+                    $('#human3_eye').animate({top:"16%",left:"34.5%"},500,"easeOutQuart");
+        } else if( msg.VB_s == "yes" ){
+                    $('#human3_eye').animate({top:"16%",left:"49.5%"},500,"easeOutQuart");
+        } else if( msg.VC_s == "yes" ){
+                    $('#human3_eye').animate({top:"16%",left:"64.5%"},500,"easeOutQuart");
+        } else {}
+    });
+    socket.on("L",(msg)=>{
+            　　if( msg.VA_s == "yes" ){
+                    $('#human2_eye').animate({top:"16%",left:"34.5%"},500,"easeOutQuart");
+        } else if( msg.VB_s == "yes" ){
+                    $('#human2_eye').animate({top:"16%",left:"49.5%"},500,"easeOutQuart");
+        } else if( msg.VC_s == "yes" ){
+                    $('#human2_eye').animate({top:"16%",left:"64.5%"},500,"easeOutQuart");
+        } else {}
+    });
+    //////////////////////////////////////////////////3人ターン終了⇒開示/////////////////////////////////////////////////////
+    socket.on("cri-open",()=>{
+        //テスト中(index2に移動)
+        //window.location.href = '/index2.html';
+        //テスト中
+        $("#victim_box div").removeClass('turn');
+        $('#victim_box div').delay(1000).queue(function(){
+            $(this).addClass('turn');
+        });
+    });
+    //////////////////////////////////////////////////ミス時の対応/////////////////////////////////////////////////////
+    var h_life0 = 1; document.getElementsByTagName("i")[0].innerHTML = h_life0 ;
+    var h_life1 = 1; document.getElementsByTagName("i")[1].innerHTML = h_life1 ;
+    var h_life2 = 1; document.getElementsByTagName("i")[2].innerHTML = h_life2 ;
+    
+    socket.on("missB",(msg)=>{
+        h_life0 = h_life0 - msg.num;
+        document.getElementsByTagName("i")[0].innerHTML = h_life0 ;
+        $('#human1_eye').animate({top:"110%",left:"50%"},2000,"easeOutQuart");
+        if (h_life0 <= 0) { //自分が負けた場合
+            setTimeout(() => {window.location.href = '/';}, 4000);
+        }
+    });
+    socket.on("missL",(msg)=>{
+        h_life1 = h_life1 - msg.num;
+        document.getElementsByTagName("i")[1].innerHTML = h_life1 ;
+        $('#human2_eye').animate({top:"50%",left:"-5%"},2000,"easeOutQuart");
+    });
+    socket.on("missR",(msg)=>{
+        h_life2 = h_life2 - msg.num;
+        document.getElementsByTagName("i")[2].innerHTML = h_life2 ;
+        $('#human3_eye').animate({top:"50%",left:"105%"},2000,"easeOutQuart");
+    });
+    //////////////////////////////////////////////////手番・非手番時の動作/////////////////////////////////////////////////////
+    socket.on("teban",()=>{
+        $('.btn-flat-border').css({visibility:"visible"});
+    });
+    socket.on("no_teban",()=>{
+        $('.btn-flat-border').css({visibility:"hidden"});
+    });
+    /////////////////////////////////////////////////犯人マークの再配置//////////////////////////////////////////////
+    socket.on("syoki",()=>{
+        $('#human1_eye').animate({top:"91%",left:"38%"},1000,"easeOutQuart");
+        $('#human2_eye').animate({top:"56%",left:"0.5%"},1000,"easeOutQuart");
+        $('#human3_eye').animate({top:"56%",left:"95.5%"},1000,"easeOutQuart");
+    });
+    //////////////////////////////////////////////////試合中に抜けた場合ロビーへ移動////////////////////////////////////////////
+    socket.on("go-robby",()=>{
+        window.location.href = '/';
+    });
+</script>
+
+</body>
+</html>
